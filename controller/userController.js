@@ -7,12 +7,12 @@ const gets = async (req, res) => {
 
 const addUser = async (req, res) => {
   console.log("req=>", req.body);
-  const { info, testResults } = req.body; // Extract patient info and test results from the request body
+  const { info, testResults } = req.body; 
   const reportData = [];
   testResults.forEach((result) => {
     if (result && typeof result === "object") {
       Object.keys(result).forEach((testName) => {
-        const testResult = result[testName]; // Extract the test result object
+        const testResult = result[testName]; 
         reportData.push({
           testName: testName,
           result: testResult.result,
