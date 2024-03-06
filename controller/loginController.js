@@ -14,9 +14,11 @@ const register = async (req, res) => {
       return res.status(400).json({ error: 'Username already exists' });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = new Login({
       username,
-      password,
+      password: hashedPassword,
       email,
       labName,
       labAddress,
@@ -24,7 +26,6 @@ const register = async (req, res) => {
 
     await newUser.save();
 
-    // Send email to the registered user
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -55,7 +56,6 @@ const register = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
 
 
 const login = async (req, res) => {
