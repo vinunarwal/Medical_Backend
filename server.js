@@ -5,7 +5,7 @@ const port = 5000;
 
 const dbConnection = require('./config/dbConnection');
 const { gets, addUser, getAllUsers } = require('./controller/userController');
-const { register, login } = require('./controller/loginController');
+const { register, login, forgetPassword } = require('./controller/loginController');
 const { verifyToken } = require('./middleware/middleware');
 
 
@@ -17,6 +17,7 @@ dbConnection();
 
 app.post('/register', register);
 app.post('/login', login);
+app.post('/forget-password', forgetPassword);
 
 app.get('/', gets);
 app.post('/user', addUser);
