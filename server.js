@@ -1,34 +1,37 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors = require('cors');
+const cors = require("cors");
 const port = 5000;
 
-const dbConnection = require('./config/dbConnection');
-const { gets, addUser, getAllUsers } = require('./controller/userController');
-const { register, login, forgetPassword } = require('./controller/loginController');
-const { verifyToken } = require('./middleware/middleware');
-
+const dbConnection = require("./config/dbConnection");
+const { gets, addUser, getAllUsers } = require("./controller/userController");
+const {
+  register,
+  login,
+  forgetPassword,
+  getUserDetails, // Import getUserDetails from loginController
+} = require("./controller/loginController");
+const verifyToken = require("./middleware/middleware.js");
 
 app.use(cors());
-app.use(express.json())
+app.use(express.json());
 
 dbConnection();
 
+app.post("/register", register);
+app.post("/login", login);
+app.post("/forget-password", forgetPassword);
 
-app.post('/register', register);
-app.post('/login', login);
-app.post('/forget-password', forgetPassword);
+app.get("/", gets);
+app.post("/user", addUser);
+app.get("/users", getAllUsers);
 
-app.get('/', gets);
-app.post('/user', addUser);
-app.get('/users', getAllUsers);
+app.get("/protected", verifyToken, (req, res) => {
+  res.json({ message: "Protected endpoint accessed", user: req.user });
+});
 
+app.get("/details", verifyToken, getUserDetails);
 
-app.get('/protected', verifyToken, (req, res) => {
-    res.json({ message: 'Protected endpoint accessed', user: req.user });
-  });
-  
-  
 app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+  console.log(`Server is running at http://localhost:${port}`);
 });
