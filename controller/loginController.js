@@ -1,9 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Login } = require('../models/loginSchema');
-
 const nodemailer = require('nodemailer');
-
 
 const register = async (req, res) => {
   try {
@@ -99,7 +97,6 @@ const login = async (req, res) => {
 //  }
 //};
 
-
 const forgetPassword = async (req, res) => {
   try {
      const { username, email } = req.body;
@@ -139,7 +136,6 @@ const forgetPassword = async (req, res) => {
      res.status(500).json({ error: 'Internal server error' });
   }
 };
-
 
 module.exports = { register, login, forgetPassword };
 
