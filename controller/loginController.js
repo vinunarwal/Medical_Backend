@@ -54,12 +54,10 @@ const register = async (req, res) => {
       } else {
         console.log("Email sent: " + info.response);
         const token = jwt.sign({ username }, "secretkey");
-        res
-          .status(201)
-          .json({
-            message: "User registered successfully. Email sent!",
-            token,
-          });
+        res.status(201).json({
+          message: "User registered successfully. Email sent!",
+          token,
+        });
       }
     });
   } catch (error) {
@@ -143,15 +141,32 @@ const forgetPassword = async (req, res) => {
 
 const getUserDetails = async (req, res) => {
   try {
-     const user = await Login.findOne({ username: req.user.username }, { password: 0 });
-     if (!user) {
-        return res.status(404).json({ error: 'User not found' });
-     }
-     res.status(200).json(user);
+    const user = await Login.findOne(
+      { username: req.user.username },
+      { password: 0 }
+    );
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(user);
   } catch (error) {
-     console.error(error);
-     res.status(500).json({ error: 'Internal server error' });
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
-module.exports = { register, login, forgetPassword, getUserDetails };
+const updateUsername = async (req, res) => {
+  try {
+    const { username } = req.body;
+    const userId = req.user._id;
+
+    await Login.updateOne({ _id: userId }, { username });
+
+    res.status(200).json({ message: "Username updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = { register, login, forgetPassword, getUserDetails, updateUsername };

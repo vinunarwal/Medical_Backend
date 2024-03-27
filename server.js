@@ -9,7 +9,8 @@ const {
   register,
   login,
   forgetPassword,
-  getUserDetails, // Import getUserDetails from loginController
+  getUserDetails,
+  updateUsername, // Import getUserDetails from loginController
 } = require("./controller/loginController");
 const verifyToken = require("./middleware/middleware.js");
 
@@ -31,6 +32,8 @@ app.get("/protected", verifyToken, (req, res) => {
 });
 
 app.get("/details", verifyToken, getUserDetails);
+
+app.put("/update", verifyToken, updateUsername);
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
