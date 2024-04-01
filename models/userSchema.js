@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
-const userSchema = mongoose.Schema({
-    report: Object
-});
-module.exports = mongoose.model("user", userSchema);
 
+  const userSchema = mongoose.Schema({
+    report: Object,
+
+});
+
+module.exports = mongoose.model("test", userSchema);
