@@ -5,7 +5,7 @@ const port = 5000;
 
 const dbConnection = require("./config/dbConnection");
 const { gets, addUser, getAllUsers } = require("./controller/userController");
-const {register, login, forgetPassword, getUserDetails, updateUsername,updateUsernameInDB } = require("./controller/loginController");
+const {register, login, forgetPassword, getUserDetails, updateUsername } = require("./controller/loginController");
 const verifyToken = require("./middleware/middleware.js");
 
 app.use(cors());
